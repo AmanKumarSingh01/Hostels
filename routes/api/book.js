@@ -16,7 +16,29 @@ router.get('/test',(req, res) => {
 router.post('/addbook', (req , res) => {
     if(req.body.id==='adminlove'&& req.body.password==='amanISgreat'){
         Book.findOne({title : req.body.title , author : req.body.author})
-            .then(()=>{
+            .then((book)=>{
+                    Book.update({_id : book.id} , {
+                        $push :{
+                            sellers :{
+                                name : req.body.sellername,
+                                email : req.body.selleremail,
+                                mobile : req.body.sellermobile,
+                                quantity : req.body.sellerquantity,
+                            }
+                        }
+                    })
+                    .then((alns)=>{
+                        res.status(200).json(alns);
+                    })
+                    .catch(err=>{
+                        throw err;
+                    })
+                    
+                })
+                
+            
+        
+            .catch(()=>{
                 const sellers =[];
                 sellers.name = req.body.sellername;
                 sellers.email = req.body.selleremail;

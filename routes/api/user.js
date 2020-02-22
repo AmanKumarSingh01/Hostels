@@ -119,4 +119,55 @@ router.get('/current' , passport.authenticate('jwt' ,{session:false}) , (req,res
     }) 
 })
 
+
+router.post('/cart' , passport.authenticate('jwt' ,{session:false}) , (req,res)=>{
+    User.findOne({_id : req.user.id})
+        .then(user=>{
+            User.update({_id : user.id} , {
+                $push :{
+                    cart :{
+                        booktitle : req.body.booktitle,
+                        author : req.body.author,
+                        price : req.body.price,
+                        sellername : req.body.sellername,
+                        selleremail : req.body.selleremail,
+                        sellermobile : req.body.sellermobile,
+                        quantity : req.body.quantity,
+                    }
+                }
+            })
+            .then(ans=>{
+                res.status(200).json(ans)
+            })
+            .catch(err=>{
+                throw err;
+            })
+        })
+})
+
+router.post('/checkout' , passport.authenticate('jwt' ,{session:false}) , (req,res)=>{
+    User.findOne({_id : req.user.id})
+        .then(user=>{
+            User.update({_id : user.id} , {
+                $push :{
+                    checkout :{
+                        booktitle : req.body.booktitle,
+                        author : req.body.author,
+                        price : req.body.price,
+                        sellername : req.body.sellername,
+                        selleremail : req.body.selleremail,
+                        sellermobile : req.body.sellermobile,
+                        quantity : req.body.quantity,
+                    }
+                }
+            })
+            .then(ans=>{
+                res.status(200).json(ans)
+            })
+            .catch(err=>{
+                throw err;
+            })
+        })
+})
+
 module.exports= router;

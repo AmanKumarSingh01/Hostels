@@ -26,7 +26,6 @@ const Bookschema = new Schema({
     },
     sellers :[
         {
-            _id: false ,
             name : {
                 type : String,
                 required :true
