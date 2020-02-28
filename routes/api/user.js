@@ -12,6 +12,9 @@ const validateLoginInput = require('./../../validation/login')
 
 const User = require('./../../models/User');
 
+// Load books 
+
+const Books = require('./../../models/Book')
 router.get('/test',(req, res) => {
     res.json({"msg":"User Works!!"});
 });
@@ -126,6 +129,7 @@ router.post('/cart' , passport.authenticate('jwt' ,{session:false}) , (req,res)=
             User.update({_id : user.id} , {
                 $push :{
                     cart :{
+                        bookid : req.body.bookid,
                         booktitle : req.body.booktitle,
                         author : req.body.author,
                         price : req.body.price,
@@ -146,23 +150,25 @@ router.post('/cart' , passport.authenticate('jwt' ,{session:false}) , (req,res)=
 })
 
 router.post('/checkout' , passport.authenticate('jwt' ,{session:false}) , (req,res)=>{
+    const arr= []
     User.findOne({_id : req.user.id})
         .then(user=>{
-            User.update({_id : user.id} , {
+            User.updateOne({_id : user.id} , {
+            
                 $push :{
-                    checkout :{
-                        booktitle : req.body.booktitle,
-                        author : req.body.author,
-                        price : req.body.price,
-                        sellername : req.body.sellername,
-                        selleremail : req.body.selleremail,
-                        sellermobile : req.body.sellermobile,
-                        quantity : req.body.quantity,
-                    }
+                    purchase :user.cart
                 }
             })
             .then(ans=>{
-                res.status(200).json(ans)
+                arr.checkout = "Sucessfull";
+                User.updateOne(
+                    {_id : req.user.id},
+                    { $unset: {"cart": []}}
+                )
+                .then(ann1=>{
+                    arr.update="Updated sucessfully"
+                    Boo
+                })
             })
             .catch(err=>{
                 throw err;

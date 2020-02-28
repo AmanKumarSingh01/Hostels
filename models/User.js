@@ -28,6 +28,9 @@ const Userschema = new Schema({
     },
     cart : [
         {
+            bookid :{
+                type : String
+            },
             booktitle : {
                 type : String
             },
