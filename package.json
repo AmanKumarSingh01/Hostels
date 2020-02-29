@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
+    "client-install" : "npm install --prefix books",
     "start": "node server.js",
-    "server": "nodemon server.js"
+    "server": "nodemon server.js",
+    "client" : "npm start --prefix books",
+    "dev" : "concurrently \"npm run server\"  \" npm run client\" "
   },
   "repository": "git@github.com:AmanKumarSingh01/Hostels.git",
   "author": "AmanKumarSingh01 <imh10012.16@bitmesra.ac.in>",
@@ -12,6 +15,7 @@
   "dependencies": {
     "bcrypt": "^3.0.8",
     "body-parser": "^1.19.0",
+    "concurrently": "^5.1.0",
     "express": "^4.17.1",
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
