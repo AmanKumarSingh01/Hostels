@@ -114,12 +114,17 @@ router.post('/login', (req, res) =>{
 //A Private route which will return current user after login
 
 router.get('/current' , passport.authenticate('jwt' ,{session:false}) , (req,res)=>{
-    // res.json({msg:'sucess'})
-    res.status(200).json({
-        id:req.user.id,
-        name: req.user.name,
-        email: req.user.email
-    }) 
+    //res.json({msg:'sucess'})
+    const obj = {
+        id : req.user.id,
+        name : req.user.name,
+        email : req.user.email,
+        avatar : req.user.avatar,
+        address : req.user.address,
+        cart : req.user.cart,
+        purchase : req.user.purchase
+    }
+    res.status(200).json(obj) ;
 })
 
 

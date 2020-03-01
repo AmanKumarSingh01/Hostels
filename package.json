@@ -3,11 +3,11 @@
   "version": "1.0.0",
   "main": "server.js",
   "scripts": {
-    "client-install" : "npm install --prefix books",
+    "client-install": "npm install --prefix books",
     "start": "node server.js",
     "server": "nodemon server.js",
-    "client" : "npm start --prefix books",
-    "dev" : "concurrently \"npm run server\"  \" npm run client\" "
+    "client": "npm start --prefix books",
+    "dev": "concurrently \"npm run server\"  \" npm run client\" "
   },
   "repository": "git@github.com:AmanKumarSingh01/Hostels.git",
   "author": "AmanKumarSingh01 <imh10012.16@bitmesra.ac.in>",
@@ -19,6 +19,7 @@
     "express": "^4.17.1",
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
+    "jwt-decode": "^2.2.0",
     "mongodb": "^3.5.3",
     "mongoose": "^5.9.1",
     "passport": "^0.4.1",

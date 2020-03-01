@@ -32,6 +32,13 @@ class Register extends Component {
         this.props.registerUser(user , this.props.history);
     }
 
+    componentDidMount(){
+        if(this.props.auth.isAuthenticated){
+            this.props.history.push('/search')
+        }
+    }
+
+
     componentWillReceiveProps(nextProps){
         if(nextProps.errors) {
             this.setState({errors :nextProps.errors});
