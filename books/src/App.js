@@ -12,6 +12,7 @@ import Register from './components/auth/Register';
 import setAuthToken from './utlis/setAuthToken';
 import { setCurrentUser, logoutUser, detailData } from './actions/authAction';
 import search from './components/search/search';
+import result from './components/Result/result';
 
 
 //Check for tokan
@@ -50,6 +51,7 @@ class App extends Component {
               <Route exact path="/login" component= {Login}/>
               <Route exact path="/register" component= {Register}/>
               <Route exact path="/search" component= {search}/>
+              <Route exact path="/result/:id" component= {result}/>
             </div>
         </div>
       </Router>
@@ -59,4 +61,4 @@ class App extends Component {
   }
 }
 
-export default App;
+export default (App);

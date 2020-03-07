@@ -82,7 +82,7 @@ router.post('/find' , (req , res)=>{
         })
 })
 
-router.post('/find/:id' , (req , res)=>{
+router.post('/findbyid/:id' , (req , res)=>{
     Book.find({_id : req.params.id})
         .then(book=>{
             if(!book){

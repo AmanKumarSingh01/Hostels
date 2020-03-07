@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
-export default class search extends Component {
+class search extends Component {
     constructor(){
         super();
         this.state={
@@ -12,6 +12,7 @@ export default class search extends Component {
         }
         this.onChange=this.onChange.bind(this);
         this.onSubmit=this.onSubmit.bind(this);
+        this.onClickHandler = this.onClickHandler.bind(this);
     }
     onChange(e){
         this.setState({[e.target.name]:e.target.value})
@@ -28,6 +29,11 @@ export default class search extends Component {
               })
     }
 
+    onClickHandler(id){
+        let path = '/result/'+id;
+        this.props.history.push(path);
+    }
+
     displaySearch(result){
         var i=1;
         return(
@@ -36,7 +42,7 @@ export default class search extends Component {
                 <div className="row row-cols-1 row-cols-md-2">
                     <div className="col mb-4" >
                         {result.map(res =>(
-                        <div key={res.id} className="card" style={{width:'31rem' , marginTop:'3%'}}>
+                        <div key={res.id} className="card" style={{width:'31rem' , marginTop:'3%'}} onClick={()=>this.onClickHandler(res._id)}>
                             <div className="card-body">
                                 <h5 className="card-title" key={res.title}>{res.title}</h5>
                                 <p className="card-text" key={res.price}>{res.price}.</p>
@@ -84,3 +90,5 @@ export default class search extends Component {
         )
     }
 }
+
+export default withRouter(search);
