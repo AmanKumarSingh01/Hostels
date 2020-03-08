@@ -4,13 +4,13 @@ import { connect } from 'react-redux';
 import {Link} from 'react-router-dom'
 import { logoutUser } from '../../actions/authAction';
 import axios from 'axios';
-import isEmpty from '../../validation/is-Empty';
 
 class Navbar extends Component {
     constructor(){
       super();
       this.state = {
         user : {},
+        count : 0
       }
     }
     onLogoutClick(e) {
@@ -19,17 +19,23 @@ class Navbar extends Component {
     }
 
     componentDidMount(){
-      axios.get('api/user/current')
+      axios.get('/api/user/current')
             .then(res=>{
               this.setState({user : res.data});
+              var cartItem = this.state.user.cart;
+              var count =0
+              cartItem.map( res => (
+                count=count+1
+              ))
+              this.setState({count});
+              console.log(count)
             })
     }
     
     render() {
-        const { isAuthenticated, user } = this.props.auth;
+        const { isAuthenticated, user, userdata } = this.props.auth;
         var cart=true
-        console.log(isEmpty(this.state.user.cart))
-        if(isEmpty(this.state.user.cart)){
+        if(this.state.count===0){
           cart= false
         }
         const authLinks = (
@@ -39,7 +45,7 @@ class Navbar extends Component {
                     to = '/cart'
                     className="nav-link"
                     >
-                    {cart ? <p>cart filled</p> : <p>empty cart</p>}
+                    {cart ? <Link className="nav-link" to= "/cart"><p>cart <span class="badge badge-pill badge-success">{this.state.count}</span></p></Link> : <p>empty cart</p>}
                     </a>
               </li>
               <li className="nav-item">

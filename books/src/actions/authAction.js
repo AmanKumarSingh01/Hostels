@@ -69,7 +69,7 @@ export const logoutUser = () => dispatch => {
 export const detailData =(token) => dispatch =>{
     setAuthToken(token);
 
-    axios.get('api/user/current')
+    axios.get('/api/user/current')
         .then(result =>{
             dispatch(getAllDetails(result.data));
         })

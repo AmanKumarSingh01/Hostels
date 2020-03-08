@@ -2,6 +2,7 @@ const express = require('express');
 const gravatar = require('gravatar');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const nodemailer = require('nodemailer');
 const passport = require('passport');
 const router = express.Router();
 const keys = require('./../../config/keys');
@@ -152,33 +153,60 @@ router.post('/cart' , passport.authenticate('jwt' ,{session:false}) , (req,res)=
                 throw err;
             })
         })
+    
 })
 
 router.post('/checkout' , passport.authenticate('jwt' ,{session:false}) , (req,res)=>{
-    const arr= []
-    User.findOne({_id : req.user.id})
-        .then(user=>{
-            User.updateOne({_id : user.id} , {
+    // const arr= []
+    // User.findOne({_id : req.user.id})
+    //     .then(user=>{
+    //         User.updateOne({_id : user.id} , {
             
-                $push :{
-                    purchase :user.cart
-                }
-            })
-            .then(ans=>{
-                arr.checkout = "Sucessfull";
-                User.updateOne(
-                    {_id : req.user.id},
-                    { $unset: {"cart": []}}
-                )
-                .then(ann1=>{
-                    arr.update="Updated sucessfully"
-                    Boo
-                })
-            })
-            .catch(err=>{
-                throw err;
-            })
-        })
+    //             $push :{
+    //                 purchase :user.cart
+    //             }
+    //         })
+    //         .then(ans=>{
+    //             arr.checkout = "Sucessfull";
+    //             User.updateOne(
+    //                 {_id : req.user.id},
+    //                 { $unset: {"cart": []}}
+    //             )
+    //             .then(ann1=>{
+    //                 arr.update="Updated sucessfully"
+    //                 Boo
+    //             })
+    //         })
+    //         .catch(err=>{
+    //             throw err;
+    //         })
+    //     })
+    console.log('Hitted!!')
+    var transporter = nodemailer.createTransport({
+        host: 'smtp.gmail.com',
+        port : 465,
+        secure :true,
+        auth: {
+          user: 'bbooks260@gmail.com',
+          pass: '1A2b3C4$'
+        }
+      });
+      
+      var mailOptions = {
+        from: 'books-buy.com',
+        to: 'amankumarsingh@outlook.in',
+        subject: 'Sending Email using Node.js',
+        text: 'That was easy!'
+      };
+      
+      transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
 })
+
 
 module.exports= router;
